@@ -4,7 +4,12 @@ import { useEffect } from 'react'
 import { ThemeModeContext } from '../context/themeModeContext'
 import updateAntd4CssVars from '../util/updateAntd4CssVars'
 import { theme } from 'antd'
-import '../style/antd4.variable.css'
+import antdGlobalCss from '../style/antd4.variable.css?raw'
+import { createGlobalStyle } from 'antd-style'
+
+const Antd4GlobalStyle = createGlobalStyle`
+  ${antdGlobalCss}
+`
 
 /**
  * 用于在 themeMode 为 auto 时更新 antd4 的 css vars
@@ -38,5 +43,5 @@ export default function Antd4ThemeUpdater() {
     token.borderRadius,
   ])
 
-  return null
+  return <Antd4GlobalStyle />
 }
