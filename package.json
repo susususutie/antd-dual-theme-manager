@@ -1,6 +1,6 @@
 {
   "name": "antd-dual-theme-manager",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "基于Ant Design的多版本主题管理库，轻松实现主题切换与定制；A multi-version theme management library for Ant Design, enabling easy theme switching and customization.",
   "main": "dist/antd-dual-theme-manager.cjs.js",
