@@ -6,6 +6,8 @@ import 'dayjs/locale/zh-cn' // for date-picker i18n
 import ThemeManager from 'lib/index'
 import Playground from './Playground'
 import moment from 'moment'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import 'moment/dist/locale/zh-cn' // 不能使用 ’moment/locale/zh-cn‘
 moment.locale('zh-cn')
 

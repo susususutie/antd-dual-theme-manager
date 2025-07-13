@@ -1,8 +1,8 @@
 import updateAntd4CssVars from './updateAntd4CssVars'
-import type { PrefixContextValue } from './'
-import type { SeedTokenContextValue } from './se'
-import type { ThemeModeContextValue } from './themeModeContext'
-import { useReducer } from 'react'
+import type { PrefixContextValue } from '../context/prefixContext'
+import type { SeedTokenContextValue } from '../context/seedTokenContext'
+import type { ThemeModeContextValue } from '../context/themeModeContext'
+
 
 type StoreState = {
   prefix: PrefixContextValue

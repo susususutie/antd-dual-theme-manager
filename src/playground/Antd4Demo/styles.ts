@@ -22,9 +22,9 @@ export const useStaticStyles = createStyles({
 /**
  * 2. 动态样式，消费token；也可传入参数 props 根据参数动态设置样式
  */
-export const useStyles = createStyles((utils, props) => {
+export const useStyles = createStyles((utils, props?: { border?: boolean }) => {
   const { token, css } = utils // appearance, isDarkMode, prefixCls, iconPrefixCls 等
-  const { border } = props
+  const { border } = props ?? {}
 
   const commonCard = css`
     border-radius: ${token.borderRadiusLG}px;

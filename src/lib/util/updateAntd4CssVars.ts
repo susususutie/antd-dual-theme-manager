@@ -2,31 +2,34 @@ import { updateCSS } from 'rc-util/lib/Dom/dynamicCSS'
 import { generate } from '@ant-design/colors'
 import { TinyColor } from '@ctrl/tinycolor'
 import { theme } from 'antd'
+import type { SeedTokenContextValue } from '../context/seedTokenContext'
+import type { AliasToken } from 'antd/es/theme/internal'
 
-function getStyle(prefixCls, isDarkMode, seedToken) {
+function getStyle(prefixCls: string, isDarkMode: boolean, seedToken: SeedTokenContextValue) {
   const token = theme.getDesignToken(
     isDarkMode ? { algorithm: theme.darkAlgorithm, token: seedToken } : { token: seedToken }
   )
-  console.log(`colorPrimary:${token.colorPrimary}, borderRadius:${token.borderRadius};`)
-  const variables = {}
+  // console.log(`colorPrimary:${token.colorPrimary}, borderRadius:${token.borderRadius};`)
+  const variables: Record<string, string> = {}
 
-  const formatColor = (color, updater) => {
+  const formatColor = (color: TinyColor, updater: (c: TinyColor) => TinyColor) => {
     let clone = color.clone()
     clone = updater?.(clone) || clone
     return clone.toRgbString()
   }
 
-  const fillColor = type => {
+  const fillColor = (type: string) => {
+    type Tey = keyof AliasToken
     const upperType = type.charAt(0).toUpperCase() + type.slice(1)
-    const baseColor = new TinyColor(token[`color${upperType}`])
+    const baseColor = new TinyColor(token[`color${upperType}` as Tey] as string)
 
-    variables[`${type}-color`] = token[`color${upperType}`]
-    variables[`${type}-color-disabled`] = token[`color${upperType}BgHover`]
-    variables[`${type}-color-hover`] = token[`color${upperType}TextHover`]
-    variables[`${type}-color-active`] = token[`color${upperType}Active`]
+    variables[`${type}-color`] = token[`color${upperType}` as Tey] as string
+    variables[`${type}-color-disabled`] = token[`color${upperType}BgHover` as Tey] as string
+    variables[`${type}-color-hover`] = token[`color${upperType}TextHover` as Tey] as string
+    variables[`${type}-color-active`] = token[`color${upperType}Active` as Tey] as string
     variables[`${type}-color-outline`] = baseColor.clone().setAlpha(0.2).toRgbString() // 用在 box-shadow 中
-    variables[`${type}-color-deprecated-bg`] = token[`color${upperType}Bg`]
-    variables[`${type}-color-deprecated-border`] = token[`color${upperType}Border`]
+    variables[`${type}-color-deprecated-bg`] = token[`color${upperType}Bg` as Tey] as string
+    variables[`${type}-color-deprecated-border`] = token[`color${upperType}Border` as Tey] as string
   }
 
   // ================ Primary Color ================
@@ -93,66 +96,66 @@ function getStyle(prefixCls, isDarkMode, seedToken) {
   `.trim()
 }
 
-const _result = `:root {
-    --ant-primary-color: #3f51b5;
---ant-primary-color-disabled: #dadee8;
---ant-primary-color-hover: #6374c2;
---ant-primary-color-active: #2b378f;
---ant-primary-color-outline: rgba(63, 81, 181, 0.2);
---ant-primary-color-deprecated-bg: #e6ebf5;
---ant-primary-color-deprecated-border: #b6bfdb;
---ant-primary-1: #e6ebf5;
---ant-primary-2: #dadee8;
---ant-primary-3: #b6bfdb;
---ant-primary-4: #8a99cf;
---ant-primary-5: #6374c2;
---ant-primary-6: #3f51b5;
---ant-primary-7: #2b378f;
---ant-primary-8: #1a2169;
---ant-primary-9: #0d1042;
---ant-primary-10: #05061c;
---ant-primary-color-deprecated-l-35: rgb(190, 197, 232);
---ant-primary-color-deprecated-l-20: rgb(133, 145, 213);
---ant-primary-color-deprecated-t-20: rgb(101, 116, 196);
---ant-primary-color-deprecated-t-50: rgb(159, 168, 218);
---ant-primary-color-deprecated-f-12: rgba(63, 81, 181, 0.12);
---ant-primary-color-active-deprecated-f-30: rgba(230, 235, 245, 0.3);
---ant-primary-color-active-deprecated-d-02: rgb(223, 229, 242);
---ant-success-color: #2fad35;
---ant-success-color-disabled: #cee0cc;
---ant-success-color-hover: #50ba52;
---ant-success-color-active: #1e8727;
---ant-success-color-outline: rgba(47, 173, 53, 0.2);
---ant-success-color-deprecated-bg: #e1eddf;
---ant-success-color-deprecated-border: #a1d49f;
---ant-warning-color: #ed6c02;
---ant-warning-color-disabled: #ffdaa6;
---ant-warning-color-hover: #fa8f2a;
---ant-warning-color-active: #c75300;
---ant-warning-color-outline: rgba(237, 108, 2, 0.2);
---ant-warning-color-deprecated-bg: #fff5e6;
---ant-warning-color-deprecated-border: #ffc47d;
---ant-error-color: #d32f2f;
---ant-error-color-disabled: #ffe0db;
---ant-error-color-hover: #e05a55;
---ant-error-color-active: #ad1d22;
---ant-error-color-outline: rgba(211, 47, 47, 0.2);
---ant-error-color-deprecated-bg: #fff2f0;
---ant-error-color-deprecated-border: #fab6af;
---ant-info-color: #0288d1;
---ant-info-color-disabled: #a6ecff;
---ant-info-color-hover: #26a4de;
---ant-info-color-active: #0069ab;
---ant-info-color-outline: rgba(2, 136, 209, 0.2);
---ant-info-color-deprecated-bg: #e6faff;
---ant-info-color-deprecated-border: #79d8f7;
-  }`
+// const _result = `:root {
+//     --ant-primary-color: #3f51b5;
+// --ant-primary-color-disabled: #dadee8;
+// --ant-primary-color-hover: #6374c2;
+// --ant-primary-color-active: #2b378f;
+// --ant-primary-color-outline: rgba(63, 81, 181, 0.2);
+// --ant-primary-color-deprecated-bg: #e6ebf5;
+// --ant-primary-color-deprecated-border: #b6bfdb;
+// --ant-primary-1: #e6ebf5;
+// --ant-primary-2: #dadee8;
+// --ant-primary-3: #b6bfdb;
+// --ant-primary-4: #8a99cf;
+// --ant-primary-5: #6374c2;
+// --ant-primary-6: #3f51b5;
+// --ant-primary-7: #2b378f;
+// --ant-primary-8: #1a2169;
+// --ant-primary-9: #0d1042;
+// --ant-primary-10: #05061c;
+// --ant-primary-color-deprecated-l-35: rgb(190, 197, 232);
+// --ant-primary-color-deprecated-l-20: rgb(133, 145, 213);
+// --ant-primary-color-deprecated-t-20: rgb(101, 116, 196);
+// --ant-primary-color-deprecated-t-50: rgb(159, 168, 218);
+// --ant-primary-color-deprecated-f-12: rgba(63, 81, 181, 0.12);
+// --ant-primary-color-active-deprecated-f-30: rgba(230, 235, 245, 0.3);
+// --ant-primary-color-active-deprecated-d-02: rgb(223, 229, 242);
+// --ant-success-color: #2fad35;
+// --ant-success-color-disabled: #cee0cc;
+// --ant-success-color-hover: #50ba52;
+// --ant-success-color-active: #1e8727;
+// --ant-success-color-outline: rgba(47, 173, 53, 0.2);
+// --ant-success-color-deprecated-bg: #e1eddf;
+// --ant-success-color-deprecated-border: #a1d49f;
+// --ant-warning-color: #ed6c02;
+// --ant-warning-color-disabled: #ffdaa6;
+// --ant-warning-color-hover: #fa8f2a;
+// --ant-warning-color-active: #c75300;
+// --ant-warning-color-outline: rgba(237, 108, 2, 0.2);
+// --ant-warning-color-deprecated-bg: #fff5e6;
+// --ant-warning-color-deprecated-border: #ffc47d;
+// --ant-error-color: #d32f2f;
+// --ant-error-color-disabled: #ffe0db;
+// --ant-error-color-hover: #e05a55;
+// --ant-error-color-active: #ad1d22;
+// --ant-error-color-outline: rgba(211, 47, 47, 0.2);
+// --ant-error-color-deprecated-bg: #fff2f0;
+// --ant-error-color-deprecated-border: #fab6af;
+// --ant-info-color: #0288d1;
+// --ant-info-color-disabled: #a6ecff;
+// --ant-info-color-hover: #26a4de;
+// --ant-info-color-active: #0069ab;
+// --ant-info-color-outline: rgba(2, 136, 209, 0.2);
+// --ant-info-color-deprecated-bg: #e6faff;
+// --ant-info-color-deprecated-border: #79d8f7;
+//   }`
 
 function genUpdateFun() {
   const dynamicStyleMark = `-ant-${Date.now()}-${Math.random()}`
   let latestArgsKey = ''
 
-  return (isDarkMode, seedToken) => {
+  return (isDarkMode: boolean, seedToken: SeedTokenContextValue) => {
     // console.log('updateAntd4CssVars 检查是否需要更新样式文件')
 
     if (latestArgsKey) {

@@ -9,7 +9,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: './src/lib/index.ts',
-      name: name.replace(/-([a-z])|([a-z])(?=\b)/gi, (match, char1, char2) => char1 || char2).toUpperCase(),
+      name: name.replace(/-([a-z])|([a-z])(?=\b)/gi, (_match, char1, char2) => char1 || char2).toUpperCase(),
       fileName: format => `${name}.${format}.js`,
     },
     minify: false,
