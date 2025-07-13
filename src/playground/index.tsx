@@ -3,7 +3,7 @@ import { App } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
 import zhCN4 from 'antd4/es/locale/zh_CN'
 import 'dayjs/locale/zh-cn' // for date-picker i18n
-import ThemeManager from 'lib/index'
+import { ThemeManager } from 'lib/index'
 import Playground from './Playground'
 import moment from 'moment'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

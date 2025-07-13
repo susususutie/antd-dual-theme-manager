@@ -1,77 +1,130 @@
-# React Responsive Scale
+# Antd Dual Theme Manager
 
-一个用于数据大屏页面的 React 组件，能够确保大屏内容在任意比例的屏幕上保持指定的比例，并动态调整 `html` 的 `font-size`，用于 `rem` 布局。
+一个用于统一管理 antd@4 与 antd@5 主题风格的方案。
 
 ## 安装
 
 ```bash
-pnpm add react-responsive-scale
+pnpm add ntd-dual-theme-manager
 ```
 
-## 使用方法
-
-### 基本用法
+## 使用
 
 ```tsx
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import ResponsiveScale from 'react-responsive-scale'
+import { ThemeManager } from 'antd-dual-theme-manager'
+import { StyleProvider, legacyLogicalPropertiesTransformer } from '@ant-design/cssinjs'
+import { App } from 'antd'
+import zhCN from 'antd/locale/zh_CN'
+import zhCN4 from 'antd4/es/locale/zh_CN'
+import 'dayjs/locale/zh-cn' // for antd@5 date-picker i18n
+import { ThemeManager } from 'lib/index'
+import Playground from './Playground'
+import moment from 'moment'
+import 'moment/dist/locale/zh-cn' // for antd@4
+moment.locale('zh-cn')
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <ResponsiveScale
-      rootValue={16} // 设计稿尺寸下的根组件 font-size
-      rootWidth={1920} // 设计稿宽度
-      rootHeight={1080} // 设计稿高度
+    <ThemeManager
+      locale={zhCN}
+      prefixCls='asd'
+      iconPrefixCls='zxc'
+      seedToken={{
+        colorPrimary: '#3f51b5',
+        colorInfo: '#0288d1',
+        colorSuccess: '#2fad35',
+        colorWarning: '#ed6c02',
+        colorError: '#d32f2f',
+        borderRadius: 8,
+      }}
+      configProviderProps4={{ locale: zhCN4 }}
     >
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          color: '#fff',
-          fontSize: '2rem',
-          textAlign: 'center',
-          lineHeight: '1080px',
-        }}
-      >
-        不管浏览器尺寸如何，内容区域都按指定宽高比显示
-      </div>
-    </ResponsiveScale>
+      <StyleProvider hashPriority='high' transformers={[legacyLogicalPropertiesTransformer]}>
+        <App component={false}>
+          <Playground />
+          <div id='portal-root'></div>
+        </App>
+      </StyleProvider>
+    </ThemeManager>
   </React.StrictMode>
 )
 ```
 
-### 参数说明
-
-| 参数名称          | 类型     | 描述                                                                |
-| ----------------- | -------- | ------------------------------------------------------------------- |
-| `rootValue`       | `number` | 设计稿尺寸下的根组件 `font-size`，用于 `rem` 布局。                 |
-| `rootWidth`       | `number` | 设计稿宽度。                                                        |
-| `rootHeight`      | `number` | 设计稿高度。                                                        |
-| `precision`       | `number` | 计算精度，默认值为 `5`。                                            |
-| `wait`            | `number` | 浏览器窗口尺寸变更后重新计算的 debounce 时间，默认值为 `300` 毫秒。 |
-| `backgroundImage` | `string` | 全屏背景图的。                                                      |
-| `backgroundColor` | `string` | 全屏背景底色。                                                      |
-
-### 获取尺寸参数和计算方法
-
-在大屏业务组件中，可以通过 `ResponsiveScale` 的 `context` 获取必要尺寸参数和尺寸计算方法。
+## 更改主题
 
 ```tsx
-import React, { useContext } from 'react'
-import { ScaleContext } from 'react-responsive-scale'
+import { UpdaterContext } from 'lib/index'
 
-const MyComponent: React.FC = () => {
-  const { calcPx, calcRem } = useContext(ScaleContext)
+export default function App() {
+  const themeUpdater = useContext(UpdaterContext)
 
   return (
     <div>
-      <p>设计稿尺寸 100px 转换为当前屏幕下的实际尺寸: {calcPx(100)}px</p>
-      <p>设计稿尺寸 100px 转换为 rem 尺寸: {calcRem(100)}rem</p>
+      <button onClick={() => themeUpdater.updateThemeMode('dark')}>暗色模式</button>
+      <button onClick={() => themeUpdater.updatePrefix({ prefixCls: 'custom' })}>更改class前缀</button>
+      <button onClick={() => themeUpdater.updateSeedToken({ colorPrimary: '#409EFF' })}>更改主题色</button>
     </div>
   )
 }
+```
 
-export default MyComponent
+## 使用 antd-style 编写样式，以使用主题变量
+
+在大屏业务组件中，可以通过 `ResponsiveScale` 的 `context` 获取必要尺寸参数和尺寸计算方法。
+
+```ts
+// styles.ts
+import { createGlobalStyle, createStyles, css } from 'antd-style'
+
+export const useStyles = createStyles(utils => {
+  const { token, css } = utils // cx, appearance, isDarkMode, prefixCls, iconPrefixCls 等
+
+  const commonCard = css`
+    border-radius: ${token.borderRadiusLG}px;
+    padding: ${token.paddingLG}px;
+  `
+
+  // 支持对象和模版字符串两种写法
+  return {
+    container: {
+      backgroundColor: token.colorBgLayout,
+      padding: token.paddingMD,
+      border: `1px solid ${token.colorBorder}`,
+    },
+
+    baseCard: commonCard,
+
+    primaryCard: css`
+      background: ${token.colorPrimary};
+      color: ${token.colorTextLightSolid};
+    `,
+
+    defaultCard: css`
+      ${commonCard};
+      background: ${token.colorBgContainer};
+      color: ${token.colorText};
+    `,
+  }
+})
+```
+
+```tsx
+// CustomCard.tsx
+import { useStyles } from './styles'
+
+const CustomCard: React.FC = () => {
+  const { styles } = useStyles()
+
+  return (
+    <div className={styles.container}>
+      <Space direction='vertical' style={{ width: '100%' }} size={16}>
+        <div className={styles.defaultCard}>普通卡片</div>
+        <div className={cx(styles.baseCard, styles.primaryCard)}>主要卡片</div>
+      </Space>
+    </div>
+  )
+}
 ```
