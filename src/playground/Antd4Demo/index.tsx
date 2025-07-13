@@ -1,11 +1,24 @@
-import { Button, Space, Menu, Tag, Alert, Typography, Select, Input, Table, Pagination, Dropdown } from 'antd4'
+import {
+  type MenuTheme,
+  //
+  Button,
+  Menu,
+  Space,
+  Tag,
+  Alert,
+  Typography,
+  Select,
+  Input,
+  Table,
+  Tabs,
+  DatePicker,
+  Pagination,
+  Dropdown,
+} from 'antd4'
 import { theme } from 'antd'
 import { useState } from 'react'
 import { AppstoreOutlined, MailOutlined, UpOutlined } from '@ant-design/icons'
 import { useStyles } from './styles'
-import cls from './index.module.less'
-import { DatePicker } from 'antd4'
-import { Tabs } from 'antd4'
 
 export default function Antd4Demo() {
   const [count, setCount] = useState(0)
@@ -28,7 +41,7 @@ export default function Antd4Demo() {
   const { cx, styles, theme: t } = useStyles({ border: false })
 
   return (
-    <div style={{ width: 400 }}>
+    <div style={{ flex: '1 1 50%', overflow: 'hidden' }}>
       <Typography.Title level={3}>Antd4Demo {count}</Typography.Title>
 
       <div style={{ marginBottom: 16 }}>
@@ -187,6 +200,7 @@ export default function Antd4Demo() {
 
       <Table
         bordered
+        rowKey='name'
         size='large'
         columns={[
           { title: 'Name', dataIndex: 'name' },
@@ -199,6 +213,7 @@ export default function Antd4Demo() {
       />
       <Table
         bordered
+        rowKey='name'
         columns={[
           { title: 'Name', dataIndex: 'name' },
           { title: 'Age', dataIndex: 'age' },
@@ -210,6 +225,7 @@ export default function Antd4Demo() {
       />
       <Table
         bordered
+        rowKey='name'
         size='small'
         columns={[
           { title: 'Name', dataIndex: 'name' },
@@ -270,7 +286,7 @@ export default function Antd4Demo() {
       />
 
       <Menu
-        theme={t.appearance}
+        theme={t.appearance as MenuTheme}
         mode='horizontal'
         items={[
           {
@@ -287,17 +303,10 @@ export default function Antd4Demo() {
         ]}
       />
 
-      <div className={styles.container} style={{ marginBottom: 16 }}>
+      <div className={styles.container}>
         <Space direction='vertical' style={{ width: '100%' }} size={16}>
           <div className={styles.defaultCard}>普通卡片</div>
           <div className={cx(styles.baseCard, styles.primaryCard)}>主要卡片</div>
-        </Space>
-      </div>
-
-      <div className={cls.container}>
-        <Space direction='vertical' style={{ width: '100%' }} size={16}>
-          <div className={cls.defaultCard}>普通卡片</div>
-          <div className={cx(cls.baseCard, cls.primaryCard)}>主要卡片</div>
         </Space>
       </div>
     </div>

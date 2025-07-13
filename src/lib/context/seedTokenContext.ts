@@ -1,7 +1,11 @@
+import type { AliasToken } from 'antd/es/theme/internal'
 import { createContext } from 'react'
 // import antdSeedToken from 'antd/es/theme/themes/seed'
 
-export const initialSeedTokenValue = {
+export type SeedTokenContextValue = Partial<
+  Pick<AliasToken, 'colorPrimary' | 'colorInfo' | 'colorSuccess' | 'colorWarning' | 'colorError' | 'borderRadius'>
+>
+export const initialSeedTokenValue: SeedTokenContextValue = {
   colorPrimary: '#1677ff',
   colorInfo: '#1677ff',
   colorSuccess: '#52c41a',
@@ -10,6 +14,6 @@ export const initialSeedTokenValue = {
   borderRadius: 6,
 }
 
-export const SeedTokenContext = createContext(initialSeedTokenValue)
+export const SeedTokenContext = createContext<SeedTokenContextValue>(initialSeedTokenValue)
 
 export const SeedTokenProvider = SeedTokenContext.Provider

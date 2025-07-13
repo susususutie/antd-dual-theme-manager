@@ -1,18 +1,24 @@
-import { useMemo, useReducer } from 'react'
-import { UpdaterProvider } from '../context/updaterContext'
-import { initialSeedTokenValue, SeedTokenProvider } from '../context/seedTokenContext'
-import { initialPrefixValue, PrefixProvider } from '../context/prefixContext'
-import { initialThemeModeValue, ThemeModeProvider } from '../context/themeModeContext'
-import { useEffect } from 'react'
-import { ConfigProvider } from 'antd'
+import { ConfigProvider, type ConfigProviderProps } from 'antd'
 import { ThemeProvider } from 'antd-style'
-import storeReducer from '../util/storeReducer'
-import { useRef } from 'react'
-import { useState } from 'react'
-import { lazy } from 'react'
-import { Suspense } from 'react'
+import { type ConfigProviderProps as ConfigProviderProps4 } from 'antd4/es/config-provider'
+import { useEffect, useMemo, useReducer, useRef } from 'react'
+import { initialPrefixValue, PrefixProvider, type PrefixContextValue } from '../context/prefixContext'
+import { initialSeedTokenValue, SeedTokenProvider, type SeedTokenContextValue } from '../context/seedTokenContext'
+import { initialThemeModeValue, ThemeModeProvider, type ThemeModeContextValue } from '../context/themeModeContext'
+import createStoreReducer from '../util/storeReducer'
+import Antd4Wrapper from './Antd4Wrapper'
+import { UpdaterProvider, type UpdaterContextValue } from '../context/updaterContext'
 
-export default function StoreProvider(props) {
+type StoreProviderProps = {
+  children: React.ReactNode
+  locale: ConfigProviderProps['locale']
+  themeMode?: ThemeModeContextValue
+  seedToken?: SeedTokenContextValue
+  configProviderProps4?: ConfigProviderProps4
+} & PrefixContextValue
+// & Omit<ConfigProviderProps, 'prefixCls' | 'iconPrefixCls'>
+
+export default function StoreProvider(props: StoreProviderProps) {
   const {
     children,
     themeMode = initialThemeModeValue,
@@ -24,14 +30,9 @@ export default function StoreProvider(props) {
   } = props
 
   const isDual = useRef(!!configProviderProps4)
-  const [Antd4Wrapper, setAntd4Wrapper] = useState(null)
 
   const isInitialMount = useRef(true)
   useEffect(() => {
-    if (isDual.current) {
-      const Antd4Wrapper = lazy(() => import('./Antd4Wrapper'))
-      setAntd4Wrapper(Antd4Wrapper)
-    }
     if (isInitialMount.current) {
       isInitialMount.current = false
       dispatch({ type: 'update-themeMode', payload: themeMode })
@@ -40,12 +41,12 @@ export default function StoreProvider(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const [storeState, dispatch] = useReducer(storeReducer, {
+  const [storeState, dispatch] = useReducer(createStoreReducer(isDual.current), {
     prefix: { prefixCls, iconPrefixCls },
     themeMode,
     seedToken: { ...initialSeedTokenValue, ...seedToken },
   })
-  const themeUpdater = useMemo(
+  const themeUpdater = useMemo<UpdaterContextValue>(
     () => ({
       updateThemeMode: payload => dispatch({ type: 'update-themeMode', payload }),
       updateSeedToken: payload => dispatch({ type: 'update-seedToken', payload }),
@@ -55,7 +56,8 @@ export default function StoreProvider(props) {
   )
 
   useEffect(() => {
-    window.dispatch = dispatch
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(window as any).dispatch = dispatch
     // dispatch({ type: 'update-themeMode', payload: 'auto' })
   }, [])
 
@@ -69,15 +71,13 @@ export default function StoreProvider(props) {
               prefixCls={storeState.prefix.prefixCls}
               iconPrefixCls={storeState.prefix.iconPrefixCls}
               theme={{
-                ...configProviderProps?.token,
+                // ...configProviderProps?.token,
                 token: storeState.seedToken,
               }}
             >
               <ThemeProvider themeMode={storeState.themeMode}>
                 {isDual.current ? (
-                  <Suspense fallback={null}>
-                    <Antd4Wrapper configProviderProps4={configProviderProps4}>{children}</Antd4Wrapper>
-                  </Suspense>
+                  <Antd4Wrapper configProviderProps4={configProviderProps4}>{children}</Antd4Wrapper>
                 ) : (
                   children
                 )}

@@ -1,19 +1,20 @@
 import {
+  theme,
+  Flex,
+  //
   Button,
   Menu,
   Space,
-  theme,
   Tag,
   Alert,
   Typography,
-  Flex,
   Select,
   Input,
-  DatePicker,
   Table,
+  Tabs,
+  DatePicker,
   Pagination,
   Dropdown,
-  Tabs,
 } from 'antd'
 import { useState } from 'react'
 import { Global, useStyles } from './styles'
@@ -41,7 +42,7 @@ export default function Antd5Demo() {
   const { cx, styles } = useStyles({ border: false })
 
   return (
-    <div style={{ width: 400 }}>
+    <div style={{ flex: '1 1 50%', overflow: 'hidden' }}>
       <Typography.Title level={3}>Antd5Demo {count}</Typography.Title>
 
       <Global />
@@ -183,6 +184,7 @@ export default function Antd5Demo() {
 
       <Table
         bordered
+        rowKey='name'
         size='large'
         columns={[
           { title: 'Name', dataIndex: 'name' },
@@ -195,6 +197,7 @@ export default function Antd5Demo() {
       />
       <Table
         bordered
+        rowKey='name'
         columns={[
           { title: 'Name', dataIndex: 'name' },
           { title: 'Age', dataIndex: 'age' },
@@ -206,6 +209,7 @@ export default function Antd5Demo() {
       />
       <Table
         bordered
+        rowKey='name'
         size='small'
         columns={[
           { title: 'Name', dataIndex: 'name' },
@@ -264,7 +268,7 @@ export default function Antd5Demo() {
           children: `Content of Tab Pane ${i}`,
         }))}
       />
-      
+
       <Menu
         mode='horizontal'
         items={[
