@@ -1,5 +1,5 @@
 import { Flex } from 'antd'
-import { UpdaterContext } from 'lib/index'
+import { UpdaterContext } from 'antd-dual-theme-manager'
 import { useContext, useEffect } from 'react'
 import Antd4Demo from './Antd4Demo'
 import Antd5Demo from './Antd5Demo'

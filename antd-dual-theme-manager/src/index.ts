@@ -1,4 +1,4 @@
-export { default } from './component/StoreProvider'
+export { default } from './component/Antd4ThemeUpdater'
 export { default as ThemeManager } from './component/StoreProvider'
 export { UpdaterContext } from './context/updaterContext'
 export { PrefixContext } from './context/prefixContext'

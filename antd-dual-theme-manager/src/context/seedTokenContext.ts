@@ -1,4 +1,4 @@
-import type { AliasToken } from 'antd/es/theme/internal'
+import type { AliasToken } from 'antd5/es/theme/internal'
 import { createContext } from 'react'
 // import antdSeedToken from 'antd/es/theme/themes/seed'
 

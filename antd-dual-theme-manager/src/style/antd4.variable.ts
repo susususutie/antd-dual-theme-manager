@@ -1,4 +1,4 @@
-/*!
+export default `/*!
  * 
  * antd v4.24.16
  * 
@@ -1690,7 +1690,7 @@ html {
   padding: 0 11px;
 }
 /**
- * Do not merge `height` & `line-height` under style with `selection` & `search`,
+ * Do not merge 'height' & 'line-height' under style with 'selection' & 'search',
  * since chrome may update to redesign with its align logic.
  */
 .ant-select-selection-overflow {
@@ -6241,7 +6241,7 @@ a.ant-btn-sm {
   display: block;
   clear: both;
   height: 0;
-  content: '\20';
+  content: '\x10';
 }
 .ant-menu-vertical .ant-menu-item,
 .ant-menu-vertical-left .ant-menu-item,
@@ -17096,7 +17096,7 @@ span.ant-radio + * {
   }
 }
 .ant-form-item {
-  /* Some non-status related component style is in `components.less` */
+  /* Some non-status related component style is in 'components.less' */
   /* To support leave along ErrorList. We add additional className to handle explain style */
 }
 .ant-form-item-explain-error {
@@ -20675,7 +20675,7 @@ textarea.ant-pagination-options-quick-jumper input {
   bottom: 0;
   left: 0;
   z-index: 10;
-  display: none \9;
+  display: none;
   width: 100%;
   height: 100%;
   background: #fff;
@@ -26777,3 +26777,4 @@ div.ant-typography-edit-content.ant-typography-rtl {
   margin: 8px 0 0;
   padding: 0;
 }
+`

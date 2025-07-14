@@ -1,9 +1,9 @@
 import { updateCSS } from 'rc-util/lib/Dom/dynamicCSS'
-import { generate } from '@ant-design/colors'
+import generate from '@ant-design/colors/es/generate'
 import { TinyColor } from '@ctrl/tinycolor'
-import { theme } from 'antd'
+import theme from 'antd5/es/theme'
 import type { SeedTokenContextValue } from '../context/seedTokenContext'
-import type { AliasToken } from 'antd/es/theme/internal'
+import type { AliasToken } from 'antd5/es/theme/internal'
 
 function getStyle(prefixCls: string, isDarkMode: boolean, seedToken: SeedTokenContextValue) {
   const token = theme.getDesignToken(

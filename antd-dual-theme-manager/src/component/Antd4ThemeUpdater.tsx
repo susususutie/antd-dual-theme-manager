@@ -1,10 +1,9 @@
 import { useTheme } from 'antd-style'
-import { useContext } from 'react'
-import { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { ThemeModeContext } from '../context/themeModeContext'
 import updateAntd4CssVars from '../util/updateAntd4CssVars'
-import { theme } from 'antd'
-import antdGlobalCss from '../style/antd4.variable.css?raw'
+import theme from 'antd5/es/theme'
+import antdGlobalCss from '../style/antd4.variable.ts'
 import { createGlobalStyle } from 'antd-style'
 
 const Antd4GlobalStyle = createGlobalStyle`

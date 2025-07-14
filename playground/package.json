@@ -1,0 +1,45 @@
+{
+  "name": "playgroud",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "prepublishOnly": "pnpm run build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ant-design/colors": "^7.2.1",
+    "@ant-design/cssinjs": "^1.23.0",
+    "@ctrl/tinycolor": "^4.1.0",
+    "antd-style": "^3.7.1",
+    "rc-util": "^5.44.4",
+    "antd-dual-theme-manager": "workspace:*"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react-swc": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-react": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:",
+    "eslint-plugin-react-refresh": "catalog:",
+    "globals": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vite": "catalog:",
+    "@ant-design/icons": "^6.0.0",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "catalog:",
+    "antd": "^5.26.0",
+    "antd4": "npm:antd@^4.24.16",
+    "classnames": "^2.5.1",
+    "dayjs": "^1.11.13",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "moment": "^2.30.1"
+  }
+}

@@ -1,4 +1,5 @@
-import { ConfigProvider } from 'antd4'
+import React from 'react'
+import ConfigProvider from 'antd4/es/config-provider'
 import Antd4ThemeUpdater from './Antd4ThemeUpdater'
 import { type ConfigProviderProps as ConfigProviderProps4 } from 'antd4/es/config-provider'
 

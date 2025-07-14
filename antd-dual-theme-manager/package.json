@@ -1,0 +1,76 @@
+{
+  "name": "antd-dual-theme-manager",
+  "type": "module",
+  "version": "0.0.2",
+  "description": "基于Ant Design的多版本主题管理库，轻松实现主题切换与定制；A multi-version theme management library for Ant Design, enabling easy theme switching and customization.",
+  "author": "sutie <susususutie@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/susususutie/antd-dual-theme-manager#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/susususutie/antd-dual-theme-manager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/susususutie/antd-dual-theme-manager/issues"
+  },
+  "keywords": [
+    "Ant Design",
+    "theme",
+    "multi-version"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/index.mjs"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "postinstall": "unbuild",
+    "build": "NODE_OPTIONS=\"--max-old-space-size=12288\" unbuild",
+    "dev": "unbuild --stub",
+    "prepublishOnly": "unbuild",
+    "start": "tsx src/index.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "antd4": "npm:antd@^4.24.16",
+    "antd5": "npm:antd@^5.26.0",
+    "eslint": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:",
+    "eslint-plugin-react-refresh": "catalog:",
+    "globals": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "unbuild": "catalog:"
+  },
+  "dependencies": {
+    "@ant-design/colors": "^7.2.1",
+    "@ant-design/cssinjs": "^1.23.0",
+    "@ctrl/tinycolor": "^4.1.0",
+    "antd-style": "^3.7.1",
+    "rc-util": "^5.44.4"
+  },
+  "peerDependencies": {
+    "antd": "^4.0.0 || ^5.0.0",
+    "react": ">=18.1.0",
+    "react-dom": ">=18.1.0"
+  },
+  "peerDependenciesMeta": {
+    "antd": {
+      "optional": true,
+      "peerDependencies": {
+        "antd4": "npm:antd@^4.0.0",
+        "antd5": "npm:antd@^5.0.0"
+      }
+    }
+  }
+}
