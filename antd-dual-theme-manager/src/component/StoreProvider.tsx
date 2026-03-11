@@ -56,11 +56,10 @@ export default function StoreProvider(props: StoreProviderProps) {
     []
   )
 
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(window as any).dispatch = dispatch
-    // dispatch({ type: 'update-themeMode', payload: 'auto' })
-  }, [])
+  // TODO: 如果需要外部访问 dispatch，考虑提供受控 API
+  // useEffect(() => {
+  //   ;(window as any).dispatch = dispatch
+  // }, [])
 
   return (
     <UpdaterProvider value={themeUpdater}>
